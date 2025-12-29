@@ -88,10 +88,15 @@ MQTT Connection/
 │   ├── esp32c3_main.cpp               # ❌ ESP32-C3 test (WiFi failed)
 │   ├── esp32_espnow_gateway.cpp       # ❌ ESP-NOW experiment (abandoned)
 │   └── esp32c3_espnow_sender.cpp      # ❌ ESP-NOW experiment (abandoned)
-├── web/
-│   ├── global-control.html            # ✅ ACTIVE: Web control interface
-│   ├── server.js                      # ❌ Old Node.js server (not needed)
-│   └── package.json                   # ❌ Old dependencies (not needed)
+├── ../backend/                        # Backend server
+│   ├── server.js                     # ✅ ACTIVE: Node.js Express server
+│   ├── database/                     # Database scripts
+│   └── package.json                  # Backend dependencies
+├── ../frontend/                      # Frontend web interface
+│   ├── dashboard.html                # ✅ ACTIVE: Main dashboard
+│   ├── global-control.html           # ✅ ACTIVE: Web control interface
+│   ├── history.html                  # ✅ ACTIVE: History viewer
+│   └── public/                       # Public assets
 └── PROJECT_DOCUMENTATION.md           # This file
 ```
 
