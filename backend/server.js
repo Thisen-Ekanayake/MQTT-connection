@@ -15,6 +15,9 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+let lastInsertTime = 0;
+const INSERT_INTERVAL = 2000;
+
 // TimescaleDB connection configuration
 /*
 const dbConfig = {
@@ -158,10 +161,16 @@ function connectMQTT() {
             }
 
             // Store sensor readings every 2 seconds (when we have all data)
-            if (lastSensorReading.battery_voltage !== null && 
-                lastSensorReading.main_voltage !== null) {
+            const now = Date.now();
+            if (
+                lastSensorReading.battery_voltage !== null &&
+                lastSensorReading.main_voltage !== null &&
+                now - lastInsertTime >= INSERT_INTERVAL
+            ) {
+                lastInsertTime = now;
                 await storeSensorReading(timestamp);
             }
+
 
             // Handle power cut history
             if (topic === 'esp32/history/powercut') {
