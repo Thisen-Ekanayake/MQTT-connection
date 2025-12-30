@@ -16,6 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // TimescaleDB connection configuration
+/*
 const dbConfig = {
     host: process.env.TIMESCALEDB_HOST || 'localhost',
     port: parseInt(process.env.TIMESCALEDB_PORT || '5432'),
@@ -26,9 +27,16 @@ const dbConfig = {
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,
 };
+*/
 
 // Create PostgreSQL connection pool
-const pool = new Pool(dbConfig);
+// const pool = new Pool(dbConfig);
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
 // Test database connection
 pool.on('connect', () => {
