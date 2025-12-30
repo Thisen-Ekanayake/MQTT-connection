@@ -522,6 +522,7 @@ app.get('/api/statistics', async (req, res) => {
 
 // Start server
 app.listen(PORT, '0.0.0.0', async () => {
+    /*
     console.log('=============================================');
     console.log('🌐 IoT Monitoring System - GLOBAL ACCESS');
     console.log('=============================================');
@@ -533,7 +534,7 @@ app.listen(PORT, '0.0.0.0', async () => {
     console.log(`🔌 MQTT Broker:     ${MQTT_BROKER}`);
     console.log(`🗄️  TimescaleDB:     ${dbConfig.host}:${dbConfig.port}/${dbConfig.database}`);
     console.log('=============================================');
-    
+    */
     // Verify database connection before starting
     try {
         const dbCheck = await pool.query('SELECT NOW()');
