@@ -4,6 +4,7 @@ dotenv.config(); // Load environment variables from .env file
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { existsSync } from 'fs';
 import mqtt from 'mqtt';
 import pkg from 'pg';
 const { Pool } = pkg;
@@ -279,43 +280,65 @@ async function storeCommandLog(topic, message, timestamp) {
     }
 }
 
-// Frontend directory path
+// Frontend directory paths
 const frontendPath = path.join(__dirname, '..', 'frontend');
+const frontendDistPath = path.join(__dirname, '..', 'frontend', 'dist');
 
 // Middleware
-app.use(express.static(frontendPath));
 app.use(express.json());
 
-// Serve main dashboard
-app.get('/', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'dashboard.html'));
-});
+// API routes (must come before static file serving)
+// All API routes are defined below
 
-app.get('/dashboard', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'dashboard.html'));
-});
+// Serve static files from React build (if dist exists) or fallback to old HTML files
+const distExists = existsSync(frontendDistPath);
 
-app.get('/dashboard.html', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'dashboard.html'));
-});
+if (distExists) {
+    // Serve React build
+    app.use(express.static(frontendDistPath));
+    
+    // Serve React app for all routes (React Router handles routing)
+    app.get('*', (req, res) => {
+        // Don't serve React app for API routes
+        if (req.path.startsWith('/api')) {
+            return res.status(404).json({ error: 'API endpoint not found' });
+        }
+        res.sendFile(path.join(frontendDistPath, 'index.html'));
+    });
+} else {
+    // Fallback to old HTML files if React build doesn't exist
+    console.log('⚠️  React build not found, serving legacy HTML files');
+    app.use(express.static(frontendPath));
+    
+    // Serve legacy HTML pages
+    app.get('/', (req, res) => {
+        res.sendFile(path.join(frontendPath, 'dashboard.html'));
+    });
 
-// Serve history page
-app.get('/history', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'history.html'));
-});
+    app.get('/dashboard', (req, res) => {
+        res.sendFile(path.join(frontendPath, 'dashboard.html'));
+    });
 
-app.get('/history.html', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'history.html'));
-});
+    app.get('/dashboard.html', (req, res) => {
+        res.sendFile(path.join(frontendPath, 'dashboard.html'));
+    });
 
-// Serve global control page
-app.get('/global-control', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'global-control.html'));
-});
+    app.get('/history', (req, res) => {
+        res.sendFile(path.join(frontendPath, 'history.html'));
+    });
 
-app.get('/global-control.html', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'global-control.html'));
-});
+    app.get('/history.html', (req, res) => {
+        res.sendFile(path.join(frontendPath, 'history.html'));
+    });
+
+    app.get('/global-control', (req, res) => {
+        res.sendFile(path.join(frontendPath, 'global-control.html'));
+    });
+
+    app.get('/global-control.html', (req, res) => {
+        res.sendFile(path.join(frontendPath, 'global-control.html'));
+    });
+}
 
 // Health check endpoint
 app.get('/api/health', async (req, res) => {

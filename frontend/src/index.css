@@ -1,0 +1,55 @@
+:root {
+  --primary-blue: #4A90E2;
+  --primary-green: #50C878;
+  --primary-yellow: #FFD700;
+  --primary-red: #FF6B6B;
+  --primary-purple: #9D4EDD;
+  --bg-light: #F5F7FA;
+  --bg-dark: #1A1D2E;
+  --card-light: #FFFFFF;
+  --card-dark: #252B42;
+  --text-light: #2C3E50;
+  --text-dark: #ECF0F1;
+  --sidebar-light: #FFFFFF;
+  --sidebar-dark: #16213E;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-dark);
+  transition: var(--transition);
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a7bc8;
+}
+
