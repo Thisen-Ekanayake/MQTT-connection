@@ -4,6 +4,7 @@
   "description": "Web interface to control ESP32 LED via MQTT",
   "main": "server.js",
   "scripts": {
+    "db:init": "psql $DATABASE_URL -f database/schema.sql",
     "start": "node server.js"
   },
   "keywords": [
