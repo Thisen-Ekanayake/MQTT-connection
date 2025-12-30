@@ -15,7 +15,11 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+let lastInsertTime = 0;
+const INSERT_INTERVAL = 2000;
+
 // TimescaleDB connection configuration
+/*
 const dbConfig = {
     host: process.env.TIMESCALEDB_HOST || 'localhost',
     port: parseInt(process.env.TIMESCALEDB_PORT || '5432'),
@@ -26,9 +30,16 @@ const dbConfig = {
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,
 };
+*/
 
 // Create PostgreSQL connection pool
-const pool = new Pool(dbConfig);
+// const pool = new Pool(dbConfig);
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
 // Test database connection
 pool.on('connect', () => {
@@ -56,7 +67,7 @@ pool.on('error', (err) => {
 })();
 
 // MQTT Broker configuration
-const MQTT_BROKER = process.env.MQTT_BROKER || 'wss://broker.hivemq.com:8884/mqtt';
+const MQTT_BROKER = process.env.MQTT_BROKER || 'mqtt://broker.hivemq.com:1883';
 const MQTT_TOPICS = [
     'esp32/sensor/voltage',
     'esp32/sensor/current',
@@ -91,8 +102,8 @@ function connectMQTT() {
     console.log('Connecting to MQTT broker:', MQTT_BROKER);
     
     mqttClient = mqtt.connect(MQTT_BROKER, {
-        clientId: 'WebServer_' + Math.random().toString(16).substr(2, 8),
-        clean: true,
+        clientId: 'WebServer_' + Math.random().toString(16).slice(2),
+        keepalive: 60,
         reconnectPeriod: 1000,
     });
 
@@ -150,10 +161,16 @@ function connectMQTT() {
             }
 
             // Store sensor readings every 2 seconds (when we have all data)
-            if (lastSensorReading.battery_voltage !== null && 
-                lastSensorReading.main_voltage !== null) {
+            const now = Date.now();
+            if (
+                lastSensorReading.battery_voltage !== null &&
+                lastSensorReading.main_voltage !== null &&
+                now - lastInsertTime >= INSERT_INTERVAL
+            ) {
+                lastInsertTime = now;
                 await storeSensorReading(timestamp);
             }
+
 
             // Handle power cut history
             if (topic === 'esp32/history/powercut') {
