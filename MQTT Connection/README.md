@@ -142,17 +142,29 @@ MQTT Connection/
 ├── PROJECT_DOCUMENTATION.md           # Detailed documentation
 ├── BLUETOOTH_OTA_GUIDE.md            # OTA update guide
 ├── MQTT Connection.code-workspace    # VS Code workspace
-├── web/                              # Web dashboard
-│   ├── README.md                     # Web app documentation
-│   ├── server.js                     # Node.js server
-│   ├── dashboard.html                # Main dashboard
-│   ├── history.html                  # Power cut history
-│   ├── global-control.html           # Remote control interface
-│   ├── package.json                  # Dependencies
-│   └── public/
-│       └── index.html                # Landing page
+├── src/                               # ESP32 firmware source
+│   └── main.cpp                      # Main ESP32 firmware
+├── platformio.ini                    # PlatformIO configuration
 └── test2/
     └── test2.ino                     # Arduino test sketch
+
+../backend/                            # Backend server
+├── server.js                         # Node.js Express server
+├── database/                         # Database scripts
+│   ├── schema.sql                    # TimescaleDB schema
+│   ├── init-db.sh                    # Database initialization (Linux/macOS)
+│   └── init-db.ps1                   # Database initialization (Windows)
+├── env.example                       # Environment variables template
+├── package.json                      # Backend dependencies
+└── README.md                         # Backend documentation
+
+../frontend/                           # Frontend web interface
+├── dashboard.html                    # Main monitoring dashboard
+├── history.html                      # Power cut history viewer
+├── global-control.html               # Remote control interface
+├── public/                           # Public assets
+│   └── index.html                    # Landing page
+└── package.json                      # Frontend dependencies (Tailwind CSS)
 
 Mqtt connection/                       # PlatformIO project
 ├── README.md                          # Firmware documentation
@@ -238,7 +250,7 @@ Open browser: http://localhost:3000/dashboard.html
 ## 📖 Documentation
 
 - **[Firmware Documentation](../Mqtt%20connection/README.md)** - ESP32 code details
-- **[Web Dashboard Documentation](web/README.md)** - Web interface guide
+- **[Web Dashboard Documentation](../backend/README.md)** - Web interface guide
 - **[Project Documentation](PROJECT_DOCUMENTATION.md)** - Complete system guide
 - **[OTA Update Guide](BLUETOOTH_OTA_GUIDE.md)** - Wireless updates
 

@@ -584,7 +584,7 @@ node --version
 - **Project Documentation**: `PROJECT_DOCUMENTATION.md`
 - **Arduino Code**: `MQTT Connection/test2/test2.ino`
 - **Main Firmware**: `Mqtt connection/src/main.cpp`
-- **Web Dashboard**: `MQTT Connection/web/dashboard.html`
+- **Web Dashboard**: `frontend/dashboard.html`
 - **OTA Guide**: `BLUETOOTH_OTA_GUIDE.md`
 
 ---
