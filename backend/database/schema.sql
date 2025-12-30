@@ -35,7 +35,7 @@ CREATE INDEX IF NOT EXISTS idx_sensor_readings_time_device ON sensor_readings(ti
 -- Power Cut Events Table
 -- ============================================
 CREATE TABLE IF NOT EXISTS power_cut_events (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL,
     device_id VARCHAR(50) NOT NULL,
     start_time TIMESTAMPTZ NOT NULL,
     end_time TIMESTAMPTZ NOT NULL,
@@ -44,7 +44,8 @@ CREATE TABLE IF NOT EXISTS power_cut_events (
     end_voltage NUMERIC(10, 3),
     voltage_drop NUMERIC(10, 3),
     energy_consumed_mwh NUMERIC(10, 2),
-    created_at TIMESTAMPTZ DEFAULT NOW()
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    PRIMARY KEY (id, start_time)
 );
 
 -- Create hypertable for power_cut_events
@@ -58,14 +59,15 @@ CREATE INDEX IF NOT EXISTS idx_power_cut_events_start_time ON power_cut_events(s
 -- Command Logs Table
 -- ============================================
 CREATE TABLE IF NOT EXISTS command_logs (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL,
     device_id VARCHAR(50) NOT NULL,
     time TIMESTAMPTZ NOT NULL,
     command_type VARCHAR(50),
     command_value VARCHAR(255),
     topic VARCHAR(255),
     message TEXT,
-    created_at TIMESTAMPTZ DEFAULT NOW()
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    PRIMARY KEY  (id, time)
 );
 
 -- Create hypertable for command_logs
