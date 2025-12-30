@@ -56,7 +56,7 @@ pool.on('error', (err) => {
 })();
 
 // MQTT Broker configuration
-const MQTT_BROKER = process.env.MQTT_BROKER || 'wss://broker.hivemq.com:8884/mqtt';
+const MQTT_BROKER = process.env.MQTT_BROKER || 'mqtt://broker.hivemq.com:1883';
 const MQTT_TOPICS = [
     'esp32/sensor/voltage',
     'esp32/sensor/current',
@@ -91,8 +91,8 @@ function connectMQTT() {
     console.log('Connecting to MQTT broker:', MQTT_BROKER);
     
     mqttClient = mqtt.connect(MQTT_BROKER, {
-        clientId: 'WebServer_' + Math.random().toString(16).substr(2, 8),
-        clean: true,
+        clientId: 'WebServer_' + Math.random().toString(16).slice(2),
+        keepalive: 60,
         reconnectPeriod: 1000,
     });
 
