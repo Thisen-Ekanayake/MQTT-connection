@@ -109,7 +109,7 @@ GRANT ALL PRIVILEGES ON DATABASE iot_monitoring TO iot_user;
 Navigate to the web directory:
 
 ```bash
-cd "MQTT Connection/web"
+cd backend
 ```
 
 #### Linux/macOS
@@ -453,7 +453,7 @@ SELECT * FROM sensor_readings ORDER BY time DESC LIMIT 10;
 
 **Solutions**:
 1. Install dotenv: `npm install dotenv`
-2. Verify `.env` file exists in `web/` directory
+2. Verify `.env` file exists in `backend/` directory
 3. Check `.env` file syntax (no spaces around `=`)
 4. Restart the server
 

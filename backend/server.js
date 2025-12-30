@@ -273,39 +273,42 @@ async function storeCommandLog(topic, message, timestamp) {
     }
 }
 
+// Frontend directory path
+const frontendPath = path.join(__dirname, '..', 'frontend');
+
 // Middleware
-app.use(express.static(__dirname));
+app.use(express.static(frontendPath));
 app.use(express.json());
 
 // Serve main dashboard
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dashboard.html'));
+    res.sendFile(path.join(frontendPath, 'dashboard.html'));
 });
 
 app.get('/dashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dashboard.html'));
+    res.sendFile(path.join(frontendPath, 'dashboard.html'));
 });
 
 app.get('/dashboard.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dashboard.html'));
+    res.sendFile(path.join(frontendPath, 'dashboard.html'));
 });
 
 // Serve history page
 app.get('/history', (req, res) => {
-    res.sendFile(path.join(__dirname, 'history.html'));
+    res.sendFile(path.join(frontendPath, 'history.html'));
 });
 
 app.get('/history.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'history.html'));
+    res.sendFile(path.join(frontendPath, 'history.html'));
 });
 
 // Serve global control page
 app.get('/global-control', (req, res) => {
-    res.sendFile(path.join(__dirname, 'global-control.html'));
+    res.sendFile(path.join(frontendPath, 'global-control.html'));
 });
 
 app.get('/global-control.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'global-control.html'));
+    res.sendFile(path.join(frontendPath, 'global-control.html'));
 });
 
 // Health check endpoint

@@ -26,9 +26,9 @@ A comprehensive Node.js web application with real-time MQTT communication for:
 
 ### Installation
 
-1. Navigate to web directory:
+1. Navigate to backend directory:
 ```bash
-cd "C:\Users\chami\OneDrive\Desktop\Projects\IOT\MQTT Connection\web"
+cd backend
 ```
 
 2. Install dependencies:
@@ -51,10 +51,17 @@ http://localhost:3000
 ## 📁 File Structure
 
 ```
-web/
+backend/
 ├── README.md                 # This file
 ├── package.json             # Dependencies and scripts
 ├── server.js                # Node.js Express server
+├── env.example              # Environment variables template
+└── database/                # Database scripts
+    ├── schema.sql           # TimescaleDB schema
+    ├── init-db.sh           # Database initialization (Linux/macOS)
+    └── init-db.ps1          # Database initialization (Windows)
+
+../frontend/                 # Frontend files (served by backend)
 ├── dashboard.html           # Main monitoring dashboard
 ├── history.html             # Power cut history viewer
 ├── global-control.html      # Remote control interface
