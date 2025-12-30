@@ -1,9 +1,11 @@
 // MQTT IoT Monitoring Web Server with TimescaleDB Integration
-require('dotenv').config(); // Load environment variables from .env file
-const express = require('express');
-const path = require('path');
-const mqtt = require('mqtt');
-const { Pool } = require('pg');
+import dotenv from 'dotenv';
+dotenv.config(); // Load environment variables from .env file
+import express from 'express';
+import path from 'path';
+import mqtt from 'mqtt';
+import pkg from 'pg';
+const { Pool } = pkg;
 
 const app = express();
 const PORT = process.env.PORT || 3000;
